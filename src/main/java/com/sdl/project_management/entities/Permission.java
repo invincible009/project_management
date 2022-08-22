@@ -1,0 +1,124 @@
+package com.sdl.project_management.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.sdl.project_management.utils.PrettySerializer;
+import org.hibernate.annotations.Where;
+
+import javax.persistence.Entity;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+@Entity
+@Where(clause ="del_Flag='N'" )
+public class Permission extends AbstractEntity  implements PrettySerializer {
+
+    private String name;
+    private String description;
+    private String code;
+    private String category;
+    private String userType;
+
+    public Permission(){
+
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", code='" + code + '\'' +
+                ", userType='" + userType + '\'' +
+                '}';
+    }
+
+    @Override @JsonIgnore
+    public JsonSerializer<Permission> getSerializer() {
+        return new JsonSerializer<>() {
+            @Override
+            public void serialize(Permission value, JsonGenerator gen, SerializerProvider serializers)
+                    throws IOException {
+                gen.writeStartObject();
+                gen.writeStringField("Name", value.name);
+                gen.writeStringField("Code", value.code);
+                gen.writeStringField("Description", value.description);
+                gen.writeStringField("User Type", value.userType);
+                gen.writeEndObject();
+            }
+        };
+    }
+    @Override @JsonIgnore
+    public JsonSerializer<Permission> getAuditSerializer() {
+        return new JsonSerializer<>() {
+            @Override
+            public void serialize(Permission value, JsonGenerator gen, SerializerProvider serializers)
+                    throws IOException {
+                gen.writeStartObject();
+                gen.writeStringField("id", value.id.toString());
+                if (value.id != null) {
+                    gen.writeStringField("id", value.id.toString());
+                } else {
+                    gen.writeStringField("id", "");
+                }
+                gen.writeStringField("name", value.name);
+                gen.writeStringField("code", value.code);
+                gen.writeStringField("category", value.category);
+                gen.writeStringField("description", value.description);
+                gen.writeStringField("userType", value.userType);
+                gen.writeEndObject();
+            }
+        };
+    }
+
+    @Override
+    public List<String> getDefaultSearchFields() {
+        return Arrays.asList("name", "description","category");
+    }
+
+}
