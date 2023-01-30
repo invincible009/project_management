@@ -1,4 +1,4 @@
-package com.sdl.project_management.domainObjects;
+package com.sdl.project_management.dto;
 
 import java.io.File;
 

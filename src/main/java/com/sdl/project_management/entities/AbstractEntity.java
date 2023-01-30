@@ -3,10 +3,8 @@ package com.sdl.project_management.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
@@ -16,16 +14,11 @@ import java.util.List;
 
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable{
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -2361696892354119780L;
 
-
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    public Long id;
 
     @Version
     protected int version;

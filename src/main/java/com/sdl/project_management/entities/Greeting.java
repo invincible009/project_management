@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.sdl.project_management.utils.PrettySerializer;
 import org.hibernate.annotations.Check;
+
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
@@ -17,7 +18,6 @@ import java.util.Date;
 @Entity
 @Where(clause ="del_flag='N'")
 @Check(constraints = "duration >= 0")
-
 public class Greeting extends AbstractEntity implements PrettySerializer {
 
     private String eventName;
